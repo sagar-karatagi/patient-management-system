@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'com.google.protobuf' version '0.9.4'
+}
+
+group = 'com.pm'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "io.grpc:grpc-netty-shaded:1.69.0"
+    implementation "io.grpc:grpc-protobuf:1.69.0"
+    implementation "io.grpc:grpc-stub:1.69.0"
+    implementation 'com.google.protobuf:protobuf-java:4.28.2'
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+}
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:3.25.3" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.69.0" }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins { grpc {} }
+        }
+    }
+}
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = project.group
+            artifactId = 'pm-protos'
+            version = project.version
+        }
+    }
+    repositories {
+        // We won't publish to remote now; keep this empty or keep for later
+    }
+}

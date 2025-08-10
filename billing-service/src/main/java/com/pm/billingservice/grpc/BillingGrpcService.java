@@ -2,7 +2,7 @@ package com.pm.billingservice.grpc;
 
 import com.pm.billing.BillingRequest;
 import com.pm.billing.BillingResponse;
-import com.pm.billing.BillingServiceGrpc.BillingServiceImplBase;
+import com.pm.billing.BillingServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
