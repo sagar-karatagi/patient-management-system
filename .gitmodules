@@ -1,6 +1,0 @@
-[submodule "patient-service/proto"]
-	path = patient-service/proto
-	url = https://github.com/sagar-karatagi/grpc-proto.git
-[submodule "billing-service/proto"]
-	path = billing-service/proto
-	url = https://github.com/sagar-karatagi/grpc-proto.git

@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/billing-service" />
+    <file type="web" url="file://$PROJECT_DIR$/grpc-proto" />
     <file type="web" url="file://$PROJECT_DIR$/patient-service" />
     <file type="web" url="file://$PROJECT_DIR$/pm-protos" />
   </component>

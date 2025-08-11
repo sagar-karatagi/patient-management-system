@@ -19,6 +19,7 @@ services:
     container_name: patient-service
     depends_on:
       - patient-service-db
+      - billing-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://patient-service-db:5432/db
       SPRING_DATASOURCE_USERNAME: admin_user
