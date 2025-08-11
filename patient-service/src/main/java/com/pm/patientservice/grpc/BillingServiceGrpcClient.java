@@ -33,6 +33,8 @@ public class BillingServiceGrpcClient {
                 .setName(name)
                 .setEmail(email)
                 .build();
-        return blockingStub.createBillingAccount(request);
+        BillingResponse response = blockingStub.createBillingAccount(request);
+        log.info(response.toString());
+        return response;
     }
 }

@@ -28,35 +28,48 @@ configurations {
 }
 
 repositories {
-    mavenLocal()
+//    mavenLocal() // useful for local dev (optional)
     mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.github.com/sagar-karatagi/grpc-proto")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER") ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key")  ?: System.getenv("GPR_KEY")  ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    
-    // gRPC dependencies
+
+    //Custom github-dependency
+    implementation "com.pm:pm-protos:1.0.0"
+    // gRPC client dependencies
     implementation 'io.grpc:grpc-netty-shaded:1.69.0'
     implementation 'io.grpc:grpc-protobuf:1.69.0'
     implementation 'io.grpc:grpc-stub:1.69.0'
-    implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
     implementation 'com.google.protobuf:protobuf-java:4.29.1'
-    implementation 'javax.annotation:javax.annotation-api:1.3.2'
-    
+    // This dependency is for older Java EE. Spring Boot 3 uses jakarta.* and this can cause conflicts.
+    // It's recommended to remove it.
+     implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+    // REMOVE this dependency. You should compile protos from the submodule, not use a pre-built JAR.
+    // implementation "com.pm:pm-protos:1.0.0"
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
-    implementation "com.pm:pm-protos:1.0.0"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 protobuf {
     protoc {
+        // This version should match your protobuf-java dependency
         artifact = "com.google.protobuf:protoc:4.29.1"
     }
     plugins {
@@ -69,6 +82,20 @@ protobuf {
             task.plugins {
                 grpc {}
             }
+            // Assumes your submodule is in a directory named 'pm-protos' at the project root
+            def protoSubmoduleDir = rootProject.file('pm-protos/src/main/proto')
+            if (protoSubmoduleDir.exists()) {
+                task.protoSourceDir protoSubmoduleDir
+            }
+        }
+    }
+}
+
+// Add the generated source files to the compilation path
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/java', 'build/generated/source/proto/main/grpc'
         }
     }
 }
