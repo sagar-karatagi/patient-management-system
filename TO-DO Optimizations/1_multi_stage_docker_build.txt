@@ -1,0 +1,5 @@
+#Docker
+-Currently the dockerfiles of patient-service and billing-service are not multi-stage build files we need to optimize this.
+
+#Github-Proto
+-The username and the key for custom proto files are hardcoded right now in the services

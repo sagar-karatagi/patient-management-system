@@ -1,0 +1,28 @@
+# Build outputs (keep the final jar)
+.gradle/
+build/
+!build/libs/*.jar
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+
+# Git
+.git/
+.gitignore
+
+# Docker files
+.dockerignore
