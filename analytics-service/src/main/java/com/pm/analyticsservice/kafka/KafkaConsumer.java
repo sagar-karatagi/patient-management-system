@@ -1,5 +1,6 @@
 package com.pm.analyticsservice.kafka;
 
+import com.pm.patient.event.PatientEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,13 @@ public class KafkaConsumer {
     */
     @KafkaListener(topics = "patient-events",groupId = "patient-events")
     public void consumeMessage(byte[] event){
-        /*
+
         try{
-            PatientEvent event = PatientEvent.parseFrom(event);
-            //Perform any business logic related to analytics-service here
-            log.info("Event received from patient-events topic: {}",event);
-        }catch (Exception e){
-            log.error("Error parsing event in analytics-service",e);
-        }
-        */
+             PatientEvent patientEvent = PatientEvent.parseFrom(event);
+             System.out.println("Received event from kafka: \n "+patientEvent.toString());
+         }catch (Exception e){
+             System.out.println("Error parsing event from kafka: " + e.getMessage());
+         }
+
     }
 }

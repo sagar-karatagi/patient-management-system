@@ -46,8 +46,9 @@ dependencies {
 
     //----------Custom dependency from github packages-----------
     implementation 'com.pm.grpc:pm-protos-billing:1.0.1'
+    implementation 'com.pm.grpc:pm-proto-patient:1.0.1'
 
-    // gRPC client dependencies
+    //-----------------gRPC client dependencies
     implementation 'io.grpc:grpc-netty-shaded:1.69.0'
     implementation 'io.grpc:grpc-protobuf:1.69.0'
     implementation 'io.grpc:grpc-stub:1.69.0'

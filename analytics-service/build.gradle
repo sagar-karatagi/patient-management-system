@@ -15,6 +15,15 @@ java {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.github.com/sagar-karatagi/grpc-proto")
+        credentials {
+            // ENV VARS DON'T WORK SOMETIME
+            username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER") ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key")  ?: System.getenv("GPR_KEY")  ?: System.getenv("GITHUB_TOKEN")
+
+        }
+    }
 }
 
 dependencies {
@@ -25,6 +34,14 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     /* Kafka Dependency */
     implementation 'org.springframework.kafka:spring-kafka:3.3.0'
+    implementation 'com.pm.grpc:pm-proto-patient:1.0.1'
+    /* GITHUB PROTO DEPENDENCY */
+    implementation 'com.pm.grpc:pm-proto-patient:1.0.1'
+    /*         Grpc dependencies          */
+    implementation 'io.grpc:grpc-netty-shaded:1.69.0'
+    implementation 'io.grpc:grpc-protobuf:1.69.0'
+    implementation 'io.grpc:grpc-stub:1.69.0'
+    implementation 'com.google.protobuf:protobuf-java:4.29.1'
 }
 
 tasks.named('test') {
