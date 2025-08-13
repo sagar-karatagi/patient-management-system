@@ -73,6 +73,25 @@ services:
     networks:
       - internal
 
+  analytics-service:
+    build:
+      context: analytics-service
+      dockerfile: Dockerfile
+    container_name: analytics-service
+    depends_on:
+      - kafka
+    ports:
+      - "4002:4002"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_KAFKA_PRODUCER_KEY_SERIALIZER: org.apache.kafka.common.serialization.StringSerializer
+      SPRING_KAFKA_PRODUCER_VALUE_SERIALIZER: org.apache.kafka.common.serialization.ByteArraySerializer
+      SPRING_KAFKA_CONSUMER_KEY_DESERIALIZER: org.apache.kafka.common.serialization.StringDeserializer
+      SPRING_KAFKA_CONSUMER_VALUE_DESERIALIZER: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    networks:
+      - internal
+=
+
 networks:
   internal:
     driver: bridge
