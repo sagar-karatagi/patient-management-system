@@ -1,0 +1,8 @@
+@baseUrl = https://localhost
+@port = 4005
+
+### Login request
+GET {{baseUrl}}:{{port}}/login
+Authorization: Bearer {{token}}
+
+###
